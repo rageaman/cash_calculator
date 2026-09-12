@@ -5,8 +5,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/rageaman/cashcalculator">
-    <img src="https://img.shields.io/badge/%E2%98%85%20STAR%20THIS%20REPOSITORY-181717?style=for-the-badge&labelColor=181717&logo=github&logoColor=white" alt="Star this repository">
+  <a href="https://rageaman.github.io/cashcalculator/">
+    <img src="https://img.shields.io/badge/%F0%9F%8C%90%20LIVE%20DEMO-181717?style=for-the-badge&labelColor=181717" alt="Live Demo">
   </a>
 </p>
 
