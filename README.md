@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://rageaman.github.io/cashcalculator/">
+  <a href="https://rageaman.github.io/cash_calculator/">
     <img src="https://img.shields.io/badge/%F0%9F%8C%90%20LIVE%20DEMO-181717?style=for-the-badge&labelColor=181717" alt="Live Demo">
   </a>
 </p>
@@ -81,7 +81,7 @@ Enter the quantity of each denomination and the calculator automatically works o
 ## 📁 Project Structure
 
 ```text
-cashcalculator/
+cash_calculator/
 ├── index.html
 └── README.md
 ```
@@ -98,8 +98,8 @@ cashcalculator/
 No build tools or package installation are required.
 
 ```bash
-git clone https://github.com/rageaman/cashcalculator.git
-cd cashcalculator
+git clone https://github.com/rageaman/cash_calculator.git
+cd cash_calculator
 ```
 
 Then open `index.html` directly in your browser.
@@ -129,7 +129,7 @@ Contributions, suggestions and improvements are welcome.
 ## ⭐ Support
 
 <p align="center">
-  <a href="https://github.com/rageaman/cashcalculator">
+  <a href="https://github.com/rageaman/cash_calculator">
     <img src="https://img.shields.io/badge/%E2%98%85%20STAR%20THIS%20REPOSITORY-6e40c9?style=for-the-badge&labelColor=24292f&logo=github&logoColor=white" alt="Star this repository">
   </a>
 </p>
