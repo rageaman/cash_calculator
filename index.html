@@ -2,14 +2,15 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Cash Counting App</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#74ebd5,#acb6e5);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;overflow-x:hidden}
+html{scroll-padding-bottom:140px}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#74ebd5,#acb6e5);min-height:100vh;min-height:100svh;display:flex;justify-content:center;align-items:flex-start;padding:20px;overflow-x:hidden;overflow-y:auto}
 body::before{content:"";position:fixed;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.18);top:-100px;left:-100px;filter:blur(2px);animation:float 7s ease-in-out infinite}
 body::after{content:"";position:fixed;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.14);bottom:-80px;right:-60px;animation:float 9s ease-in-out infinite reverse}
-.container{position:relative;z-index:1;background:rgba(255,255,255,.94);padding:24px;border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,.18);width:95%;max-width:750px;animation:containerIn .8s cubic-bezier(.22,1,.36,1);backdrop-filter:blur(10px)}
+.container{position:relative;z-index:1;background:rgba(255,255,255,.94);padding:24px;border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,.18);width:95%;max-width:750px;margin:auto;animation:containerIn .8s cubic-bezier(.22,1,.36,1);backdrop-filter:blur(10px)}
 h1{text-align:center;font-size:1.9em;margin-bottom:22px;color:#333;animation:titleIn .8s .15s both cubic-bezier(.22,1,.36,1)}
 .flex-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
 .item{flex:1 1 60px;min-width:60px;display:flex;flex-direction:column;align-items:center;background:#f5f7f7;padding:11px 7px;border-radius:13px;transition:transform .35s cubic-bezier(.22,1,.36,1),background .3s ease,box-shadow .35s ease;animation:cardIn .55s both cubic-bezier(.22,1,.36,1)}
@@ -27,7 +28,22 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
 @keyframes resultIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 @keyframes resultPop{0%{transform:scale(1)}45%{transform:scale(1.035);box-shadow:0 8px 25px rgba(0,121,107,.15)}100%{transform:scale(1);box-shadow:none}}
 @keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,20px)}}
-@media(max-width:500px){.container{padding:18px}.item{flex:1 1 42px;min-width:42px}.item:hover{transform:translateY(-4px) scale(1.02)}input[type=number]{width:44px}.result{font-size:1.4em}}
+@media(max-width:500px){
+ body{padding:12px;}
+ .container{padding:18px;width:100%;margin:0 auto 20px;}
+ .item{flex:1 1 42px;min-width:42px}
+ .item:hover{transform:translateY(-4px) scale(1.02)}
+ input[type=number]{width:44px}
+ .result{font-size:1.4em}
+}
+@media(max-width:500px) and (max-height:700px){
+ body{align-items:flex-start;}
+ .container{margin-top:4px;}
+ h1{font-size:1.6em;margin-bottom:16px;}
+ .flex-row{gap:9px;}
+ .item{padding:8px 5px;}
+ .result{margin-top:16px;}
+}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -56,7 +72,12 @@ let currentTotal=0;
 let animationFrame;
 function animateCounter(start,end,duration=450){cancelAnimationFrame(animationFrame);const startTime=performance.now();function tick(now){const p=Math.min((now-startTime)/duration,1);const eased=1-Math.pow(1-p,3);const value=Math.round(start+(end-start)*eased);result.textContent=`Total Cash: ₹${value.toLocaleString('en-IN')}`;if(p<1)animationFrame=requestAnimationFrame(tick)}animationFrame=requestAnimationFrame(tick)}
 function calculateTotal(){let total=0;inputs.forEach((input,i)=>{total+=(Number(input.value)||0)*values[i]});result.classList.remove('updated');void result.offsetWidth;result.classList.add('updated');if(total!==currentTotal){animateCounter(currentTotal,total);currentTotal=total}}
-inputs.forEach(input=>input.addEventListener('input',calculateTotal));
+inputs.forEach(input=>{
+ input.addEventListener('input',calculateTotal);
+ input.addEventListener('focus',()=>{
+   setTimeout(()=>input.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'}),180);
+ });
+});
 </script>
 </body>
 </html>
