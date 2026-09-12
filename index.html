@@ -6,7 +6,7 @@
 <title>Cash Counting App</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-bottom:24px}
+html{scroll-behavior:smooth;scroll-padding-top:20px;scroll-padding-bottom:180px}
 body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#74ebd5,#acb6e5);min-height:100vh;min-height:100svh;display:flex;justify-content:center;align-items:flex-start;padding:20px;overflow-x:hidden;overflow-y:auto}
 body::before{content:"";position:fixed;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.18);top:-100px;left:-100px;filter:blur(2px);animation:float 7s ease-in-out infinite;pointer-events:none}
 body::after{content:"";position:fixed;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.14);bottom:-80px;right:-60px;animation:float 9s ease-in-out infinite reverse;pointer-events:none}
@@ -17,7 +17,7 @@ h1{text-align:center;font-size:1.9em;margin-bottom:22px;color:#333;animation:tit
 .item:nth-child(1){animation-delay:.12s}.item:nth-child(2){animation-delay:.17s}.item:nth-child(3){animation-delay:.22s}.item:nth-child(4){animation-delay:.27s}.item:nth-child(5){animation-delay:.32s}.item:nth-child(6){animation-delay:.37s}.item:nth-child(7){animation-delay:.42s}.item:nth-child(8){animation-delay:.47s}.item:nth-child(9){animation-delay:.52s}.item:nth-child(10){animation-delay:.57s}
 .item:hover{transform:translateY(-7px) scale(1.04);background:#e7fbf8;box-shadow:0 10px 22px rgba(0,121,107,.18)}
 label{font-size:.85em;margin-bottom:7px;font-weight:700;color:#555}
-input[type=number]{width:60px;padding:8px 5px;border-radius:9px;border:2px solid #ccc;text-align:center;font-size:.95em;outline:none;transition:border-color .3s ease,box-shadow .3s ease,transform .25s ease,background .3s ease}
+input[type=number]{width:60px;padding:8px 5px;border-radius:9px;border:2px solid #ccc;text-align:center;font-size:.95em;outline:none;transition:border-color .3s ease,box-shadow .3s ease,transform .25s ease,background .3s ease;scroll-margin-top:20px;scroll-margin-bottom:180px}
 input[type=number]:focus{border-color:#00796b;box-shadow:0 0 0 4px rgba(0,121,107,.12);background:#f0fffe;transform:scale(1.06)}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .result{margin-top:25px;text-align:center;font-size:1.8em;font-weight:700;color:#00796b;min-height:58px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(0,121,107,.06),rgba(116,235,213,.08));border-radius:14px;padding:15px;transition:transform .25s ease,box-shadow .25s ease;animation:resultIn .7s .65s both cubic-bezier(.22,1,.36,1)}
@@ -70,6 +70,7 @@ const result=document.getElementById('result');
 let currentTotal=0;
 let animationFrame=0;
 let keyboardOpen=false;
+let scrollTimer=0;
 
 function formatCurrency(value){return `Total Cash: ₹${Math.max(0,Math.round(value)).toLocaleString('en-IN')}`}
 
@@ -102,18 +103,36 @@ function calculateTotal(){
  currentTotal=total;
 }
 
-function scrollInputIntoView(input){
- if(!keyboardOpen) return;
+function isKeyboardVisible(){
+ if(!window.visualViewport) return keyboardOpen;
+ return window.innerHeight-window.visualViewport.height>80;
+}
+
+function keepInputVisible(input,behavior='smooth'){
+ if(!input || !document.body.contains(input)) return;
  const viewport=window.visualViewport;
- const visibleBottom=viewport?viewport.height+viewport.offsetTop:window.innerHeight;
+ const topInset=16;
+ const bottomInset=24;
+ const viewportTop=viewport ? viewport.offsetTop : 0;
+ const viewportBottom=viewport ? viewport.offsetTop+viewport.height : window.innerHeight;
  const rect=input.getBoundingClientRect();
- const safeGap=24;
- const keyboardOverlap=viewport?Math.max(0,window.innerHeight-visibleBottom):0;
- const targetBottom=visibleBottom-safeGap-keyboardOverlap;
- if(rect.bottom>targetBottom || rect.top<20){
-   const scrollBy=rect.bottom-targetBottom;
-   window.scrollBy({top:scrollBy,behavior:'smooth'});
- }
+ const minTop=viewportTop+topInset;
+ const maxBottom=viewportBottom-bottomInset;
+ let delta=0;
+ if(rect.bottom>maxBottom) delta=rect.bottom-maxBottom;
+ else if(rect.top<minTop) delta=rect.top-minTop;
+ if(Math.abs(delta)>2) window.scrollBy({top:delta,behavior});
+}
+
+function scheduleInputVisibility(input){
+ clearTimeout(scrollTimer);
+ const run=()=>{
+   if(document.activeElement===input) keepInputVisible(input,'smooth');
+ };
+ requestAnimationFrame(run);
+ setTimeout(run,80);
+ setTimeout(run,220);
+ setTimeout(run,450);
 }
 
 inputs.forEach(input=>{
@@ -121,28 +140,38 @@ inputs.forEach(input=>{
    if(input.value!=='' && Number(input.value)<0) input.value='0';
    if(input.value.includes('.')) input.value=String(Math.floor(Number(input.value)));
    calculateTotal();
+   scheduleInputVisibility(input);
  });
  input.addEventListener('focus',()=>{
    keyboardOpen=true;
-   setTimeout(()=>scrollInputIntoView(input),180);
-   setTimeout(()=>scrollInputIntoView(input),450);
+   scheduleInputVisibility(input);
  });
- input.addEventListener('blur',()=>{input.value=input.value===''?'':String(Math.max(0,Math.floor(Number(input.value)||0)))});
+ input.addEventListener('blur',()=>{
+   input.value=input.value===''?'':String(Math.max(0,Math.floor(Number(input.value)||0)));
+ });
 });
 
-document.addEventListener('click',event=>{
- if(!event.target.matches('input[type="number"]')) keyboardOpen=false;
+document.addEventListener('pointerdown',event=>{
+ if(!event.target.closest('input[type="number"]')) keyboardOpen=false;
+});
+
+document.addEventListener('focusin',event=>{
+ if(event.target.matches('input[type="number"]')){
+   keyboardOpen=true;
+   scheduleInputVisibility(event.target);
+ }
 });
 
 if(window.visualViewport){
- const adjustForKeyboard=()=>{
-   if(document.activeElement?.matches('input[type="number"]')){
+ const handleViewportChange=()=>{
+   const active=document.activeElement;
+   if(active?.matches('input[type="number"]') && isKeyboardVisible()){
      keyboardOpen=true;
-     setTimeout(()=>scrollInputIntoView(document.activeElement),50);
+     scheduleInputVisibility(active);
    }
  };
- window.visualViewport.addEventListener('resize',adjustForKeyboard);
- window.visualViewport.addEventListener('scroll',adjustForKeyboard);
+ window.visualViewport.addEventListener('resize',handleViewportChange);
+ window.visualViewport.addEventListener('scroll',handleViewportChange);
 }
 
 calculateTotal();
