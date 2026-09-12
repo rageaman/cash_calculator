@@ -112,7 +112,20 @@ function keyboardIsOpen(){
 function keepInputVisible(input,behavior='auto'){
  if(!input || document.activeElement!==input || !document.body.contains(input)) return;
  if(!keyboardIsOpen() && window.visualViewport) return;
- input.scrollIntoView({block:'center',inline:'nearest',behavior});
+
+ const viewport=window.visualViewport;
+ const visibleHeight=viewport?viewport.height:window.innerHeight;
+ const viewportTop=viewport?viewport.offsetTop:0;
+ const rect=input.getBoundingClientRect();
+ // Keep the focused input comfortably visible, but lower on the screen.
+ // 62% of the visible viewport gives the keyboard enough room while
+ // avoiding the previous behavior that moved the input too far upward.
+ const targetY=viewportTop+visibleHeight*0.62;
+ const delta=rect.top+(rect.height/2)-targetY;
+
+ if(Math.abs(delta)>8){
+   window.scrollBy({top:delta,behavior});
+ }
 }
 
 function scheduleInputVisibility(input){
