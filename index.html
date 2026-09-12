@@ -117,10 +117,9 @@ function keepInputVisible(input,behavior='auto'){
  const visibleHeight=viewport?viewport.height:window.innerHeight;
  const viewportTop=viewport?viewport.offsetTop:0;
  const rect=input.getBoundingClientRect();
- // Keep the focused input comfortably visible, but lower on the screen.
- // 62% of the visible viewport gives the keyboard enough room while
- // avoiding the previous behavior that moved the input too far upward.
- const targetY=viewportTop+visibleHeight*0.62;
+ // Target the focused input at 75% of the visible viewport:
+ // center + half of the top-to-center gap, so it sits lower without reaching the keyboard.
+ const targetY=viewportTop+visibleHeight*0.75;
  const delta=rect.top+(rect.height/2)-targetY;
 
  if(Math.abs(delta)>8){
