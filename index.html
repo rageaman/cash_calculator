@@ -112,6 +112,33 @@ function calculateTotal(){
  currentTotal=total;
 }
 
+function resetAll(){
+ inputs.forEach(input=>{input.value='';});
+ calculateTotal();
+ inputs[0]?.focus();
+}
+
+function clearCurrentInput(input){
+ if(!input) return;
+ input.value='';
+ calculateTotal();
+}
+
+function moveToInput(index){
+ if(index<0 || index>=inputs.length) return;
+ inputs[index].focus();
+ inputs[index].select();
+ scheduleInputVisibility(inputs[index]);
+}
+
+function adjustCurrentInput(input,delta){
+ if(!input) return;
+ const current=Math.max(0,Math.floor(Number(input.value)||0));
+ input.value=String(Math.max(0,current+delta));
+ calculateTotal();
+ scheduleInputVisibility(input);
+}
+
 function keyboardIsOpen(){
  if(!window.visualViewport) return keyboardOpen;
  return window.innerHeight-window.visualViewport.height>80;
@@ -125,8 +152,6 @@ function keepInputVisible(input,behavior='auto'){
  const visibleHeight=viewport?viewport.height:window.innerHeight;
  const viewportTop=viewport?viewport.offsetTop:0;
  const rect=input.getBoundingClientRect();
- // Target the focused input at 75% of the visible viewport:
- // center + half of the top-to-center gap, so it sits lower without reaching the keyboard.
  const targetY=viewportTop+visibleHeight*0.75;
  const delta=rect.top+(rect.height/2)-targetY;
 
@@ -162,6 +187,64 @@ inputs.forEach(input=>{
  input.addEventListener('blur',()=>{
    input.value=input.value===''?'':String(Math.max(0,Math.floor(Number(input.value)||0)));
  });
+});
+
+// Keyboard shortcuts:
+// Enter = next denomination, Shift+Enter = previous denomination
+// Ctrl/Cmd+Enter = calculate total
+// Escape = clear focused field
+// + / ArrowUp = add 1, - / ArrowDown = subtract 1
+// Ctrl/Cmd+R = reset all fields
+// Ctrl/Cmd+Backspace = clear all fields
+
+document.addEventListener('keydown',event=>{
+ const active=document.activeElement;
+ const focusedInput=active?.matches('input[type="number"]')?active:null;
+ const modifier=event.ctrlKey||event.metaKey;
+
+ if(modifier && event.key.toLowerCase()==='r'){
+   event.preventDefault();
+   resetAll();
+   return;
+ }
+
+ if(modifier && event.key==='Backspace'){
+   event.preventDefault();
+   resetAll();
+   return;
+ }
+
+ if(modifier && event.key==='Enter'){
+   event.preventDefault();
+   calculateTotal();
+   return;
+ }
+
+ if(!focusedInput) return;
+
+ if(event.key==='Enter'){
+   event.preventDefault();
+   const index=inputs.indexOf(focusedInput);
+   moveToInput(event.shiftKey?index-1:index+1);
+   return;
+ }
+
+ if(event.key==='Escape'){
+   event.preventDefault();
+   clearCurrentInput(focusedInput);
+   return;
+ }
+
+ if(event.key==='+' || event.key==='ArrowUp'){
+   event.preventDefault();
+   adjustCurrentInput(focusedInput,1);
+   return;
+ }
+
+ if(event.key==='-' || event.key==='ArrowDown'){
+   event.preventDefault();
+   adjustCurrentInput(focusedInput,-1);
+ }
 });
 
 document.addEventListener('pointerdown',event=>{
