@@ -6,37 +6,26 @@
 <title>Cash Counting App</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:20px;scroll-padding-bottom:24px}
+html{scroll-behavior:auto;scroll-padding-top:20px;scroll-padding-bottom:24px}
 body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#74ebd5,#acb6e5);min-height:100vh;min-height:100svh;display:block;padding:20px;overflow-x:hidden;overflow-y:auto}
-body::before{content:"";position:fixed;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.18);top:-100px;left:-100px;filter:blur(2px);animation:float 7s ease-in-out infinite;pointer-events:none}
-body::after{content:"";position:fixed;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.14);bottom:-80px;right:-60px;animation:float 9s ease-in-out infinite reverse;pointer-events:none}
-.container{position:relative;z-index:1;background:rgba(255,255,255,.94);padding:24px;border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,.18);width:95%;max-width:750px;margin:0 auto 20px;animation:containerIn .6s .1s both cubic-bezier(.22,1,.36,1)}
-h1{text-align:center;font-size:1.9em;margin-bottom:28px;color:#333;animation:titleIn .8s .15s both cubic-bezier(.22,1,.36,1)}
-.input-section{background:#f9fafb;padding:20px;border-radius:16px;margin-bottom:24px;border:2px solid #e5e7eb;animation:cardIn .6s .25s both cubic-bezier(.22,1,.36,1)}
+body::before{content:"";position:fixed;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.18);top:-100px;left:-100px;filter:blur(2px);pointer-events:none}
+body::after{content:"";position:fixed;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.14);bottom:-80px;right:-60px;pointer-events:none}
+.container{position:relative;z-index:1;background:rgba(255,255,255,.94);padding:24px;border-radius:22px;box-shadow:0 20px 50px rgba(0,0,0,.18);width:95%;max-width:750px;margin:0 auto 20px}
+h1{text-align:center;font-size:1.9em;margin-bottom:28px;color:#333}
+.input-section{background:#f9fafb;padding:20px;border-radius:16px;margin-bottom:24px;border:2px solid #e5e7eb}
 .input-section h2{font-size:1.1em;color:#555;margin-bottom:16px;text-align:center}
 .flex-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-.item{flex:1 1 60px;min-width:60px;display:flex;flex-direction:column;align-items:center;background:#fff;padding:11px 7px;border-radius:13px;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease;border:1px solid #e5e7eb}
-.item:nth-child(1){animation-delay:.12s}.item:nth-child(2){animation-delay:.17s}.item:nth-child(3){animation-delay:.22s}.item:nth-child(4){animation-delay:.27s}.item:nth-child(5){animation-delay:.32s}.item:nth-child(6){animation-delay:.37s}.item:nth-child(7){animation-delay:.42s}.item:nth-child(8){animation-delay:.47s}.item:nth-child(9){animation-delay:.52s}.item:nth-child(10){animation-delay:.57s}
-.item{animation:cardIn .5s both cubic-bezier(.22,1,.36,1)}
-.item:hover{transform:translateY(-7px) scale(1.04);background:#e7fbf8;box-shadow:0 10px 22px rgba(0,121,107,.18)}
+.item{flex:1 1 60px;min-width:60px;display:flex;flex-direction:column;align-items:center;background:#fff;padding:11px 7px;border-radius:13px;border:1px solid #e5e7eb}
 label{font-size:.85em;margin-bottom:7px;font-weight:700;color:#555}
-input[type=number]{width:60px;padding:8px 5px;border-radius:9px;border:2px solid #ccc;text-align:center;font-size:.95em;outline:none;transition:border-color .3s ease,box-shadow .3s ease,transform .25s ease}
-input[type=number]:focus{border-color:#00796b;box-shadow:0 0 0 4px rgba(0,121,107,.12);background:#f0fffe;transform:scale(1.06)}
+input[type=number]{width:60px;padding:8px 5px;border-radius:9px;border:2px solid #ccc;text-align:center;font-size:.95em;outline:none}
+input[type=number]:focus{border-color:#00796b;box-shadow:0 0 0 4px rgba(0,121,107,.12);background:#f0fffe}
 input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.result{margin-top:0;text-align:center;font-size:1.8em;font-weight:700;color:#00796b;min-height:58px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(0,121,107,.08),rgba(76,175,80,.08));border-radius:14px;border:2px solid rgba(0,121,107,.2);animation:resultIn .6s .35s both cubic-bezier(.22,1,.36,1)}
-.result.updated{animation:resultPop .4s cubic-bezier(.22,1,.36,1)}
-@keyframes containerIn{from{opacity:0;transform:translateY(35px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes titleIn{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
-@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes resultIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-@keyframes resultPop{0%{transform:scale(1)}45%{transform:scale(1.035);box-shadow:0 8px 25px rgba(0,121,107,.15)}100%{transform:scale(1);box-shadow:none}}
-@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,20px)}}
+.result{margin-top:0;text-align:center;font-size:1.8em;font-weight:700;color:#00796b;min-height:58px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(0,121,107,.08),rgba(76,175,80,.08));border-radius:14px;border:2px solid rgba(0,121,107,.2)}
 @media(max-width:500px){
  body{padding:12px}
  .container{padding:18px;width:100%;margin:0 auto 20px}
  .input-section{padding:14px;margin-bottom:18px}
  .item{flex:1 1 42px;min-width:42px}
- .item:hover{transform:translateY(-4px) scale(1.02)}
  input[type=number]{width:44px}
  .result{font-size:1.4em}
 }
@@ -48,7 +37,6 @@ input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-
  .item{padding:8px 5px}
  .result{margin-top:0}
 }
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
@@ -76,7 +64,6 @@ const values=[2000,500,200,100,50,20,10,5,2,1];
 const inputs=[...document.querySelectorAll('input[type="number"]')];
 const result=document.getElementById('result');
 let currentTotal=0;
-let animationFrame=0;
 let keyboardOpen=false;
 let visibilityTimers=[];
 let visibilityFrame=0;
@@ -90,25 +77,9 @@ function getTotal(){
  },0);
 }
 
-function animateCounter(start,end,duration=300){
- cancelAnimationFrame(animationFrame);
- if(start===end){result.textContent=formatCurrency(end);return}
- const startTime=performance.now();
- function tick(now){
-   const progress=Math.min((now-startTime)/duration,1);
-   const eased=1-Math.pow(1-progress,3);
-   result.textContent=formatCurrency(start+(end-start)*eased);
-   if(progress<1) animationFrame=requestAnimationFrame(tick);
- }
- animationFrame=requestAnimationFrame(tick);
-}
-
 function calculateTotal(){
  const total=getTotal();
- result.classList.remove('updated');
- void result.offsetWidth;
- result.classList.add('updated');
- animateCounter(currentTotal,total);
+ result.textContent=formatCurrency(total);
  currentTotal=total;
 }
 
