@@ -1,6 +1,16 @@
 # Cash Calculator
 
-A simple browser-based calculator for counting Indian cash by entering the quantity of each note and coin denomination.
+<p align="center">
+  A simple browser-based calculator for counting Indian cash by entering the quantity of each note and coin denomination.
+</p>
+
+<p align="center">
+  <a href="https://rageaman.github.io/cash_calculator/">
+    <img src="https://img.shields.io/badge/%F0%9F%8C%90%20LIVE%20DEMO-181717?style=for-the-badge&labelColor=181717" alt="Live Demo">
+  </a>
+</p>
+
+---
 
 ## Features
 
