@@ -1,84 +1,45 @@
 # Cash Calculator
 
-<p align="center">
-  A simple and clean browser-based cash calculator for quickly calculating the total value of notes and coins.
-</p>
+A simple browser-based calculator for counting Indian cash by entering the quantity of each note and coin denomination.
 
-<p align="center">
-  <a href="https://rageaman.github.io/cash_calculator/">
-    <img src="https://img.shields.io/badge/%F0%9F%8C%90%20LIVE%20DEMO-181717?style=for-the-badge&labelColor=181717" alt="Live Demo">
-  </a>
-</p>
+## Features
 
----
+- Calculates the total value of entered cash quantities
+- Supports these denominations:
+  - ₹2000
+  - ₹500
+  - ₹200
+  - ₹100
+  - ₹50
+  - ₹20
+  - ₹10
+  - ₹5
+  - ₹2
+  - ₹1
+- Updates the total when quantities are entered or changed
+- Accepts whole-number quantities only
+- Responsive layout for desktop and mobile screens
+- Keyboard shortcuts for faster entry
+- No build tools, dependencies, account, or setup required
 
-## 💵 About
+## Keyboard Shortcuts
 
-Cash Calculator is a lightweight browser-based tool for calculating the total amount of physical cash.
+- `Enter` — move to the next denomination
+- `Shift + Enter` — move to the previous denomination
+- `Ctrl/Cmd + Enter` — calculate the total
+- `Escape` — clear the focused field
+- `+` / `Arrow Up` — increase the focused quantity by 1
+- `-` / `Arrow Down` — decrease the focused quantity by 1
+- `Ctrl/Cmd + R` — reset all fields
+- `Ctrl/Cmd + Backspace` — clear all fields
 
-Enter the quantity of each denomination and the calculator automatically works out the value and final total.
+## Built With
 
----
+- HTML5
+- CSS3
+- JavaScript
 
-## ✨ Features
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 💰 Cash Calculation
-
-- Calculate notes and coins by quantity
-- Supports multiple denominations
-- Shows the value for each denomination
-- Calculates the grand total instantly
-
-</td>
-<td width="50%" valign="top">
-
-### 🎨 Interface
-
-- Clean and minimal interface
-- Simple quantity inputs
-- Easy-to-read calculation result
-- Responsive layout
-- No account or setup required
-
-</td>
-</tr>
-</table>
-
----
-
-## 🪙 Supported Denominations
-
-| Type | Denomination |
-|------|--------------|
-| Note | 1,000 |
-| Note | 500 |
-| Note | 100 |
-| Note | 50 |
-| Note | 20 |
-| Coin | 10 |
-| Coin | 5 |
-| Coin | 2 |
-| Coin | 1 |
-
----
-
-## 🛠️ Built With
-
-<table>
-<tr>
-<td align="center" width="33%"><strong>HTML5</strong><br>Page structure</td>
-<td align="center" width="33%"><strong>CSS3</strong><br>Layout & styling</td>
-<td align="center" width="33%"><strong>JavaScript</strong><br>Calculation logic</td>
-</tr>
-</table>
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```text
 cash_calculator/
@@ -86,56 +47,25 @@ cash_calculator/
 └── README.md
 ```
 
-| File | Description |
-|------|-------------|
-| `index.html` | Main calculator interface and functionality |
-| `README.md` | Project documentation |
+## Run Locally
 
----
-
-## 🚀 Run Locally
-
-No build tools or package installation are required.
+No installation or build step is required.
 
 ```bash
 git clone https://github.com/rageaman/cash_calculator.git
 cd cash_calculator
 ```
 
-Then open `index.html` directly in your browser.
+Open `index.html` directly in a browser.
 
-For a local server:
+Alternatively, run a simple local server:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then visit `http://localhost:8000`.
+Then open `http://localhost:8000` in your browser.
 
----
+## Notes
 
-## 📱 Responsive Design
-
-The calculator is designed to work across desktop and mobile screen sizes with a simple, touch-friendly interface.
-
----
-
-## 🤝 Contributing
-
-Contributions, suggestions and improvements are welcome.
-
----
-
-## ⭐ Support
-
-<p align="center">
-  <a href="https://github.com/rageaman/cash_calculator">
-    <img src="https://img.shields.io/badge/%E2%98%85%20STAR%20THIS%20REPOSITORY-6e40c9?style=for-the-badge&labelColor=24292f&logo=github&logoColor=white" alt="Star this repository">
-  </a>
-</p>
-
----
-
-<p align="center">
-  <img src="https://img.shields.io/badge/%E2%99%A5%20MADE%20WITH%20LOVE%20BY-RAGEAMAN-24292f?style=for-the-badge" alt="Made with love by RageAman">
-</p>
+The project is a single-page calculator. The calculation logic and styling are contained in `index.html`.
