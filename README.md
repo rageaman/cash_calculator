@@ -89,9 +89,10 @@ Enter the quantity of each denomination and get the total cash value instantly i
 
 <table>
 <tr>
-<td align="center" width="33%"><strong>HTML5</strong><br>Page structure</td>
-<td align="center" width="33%"><strong>CSS3</strong><br>Layout & styling</td>
-<td align="center" width="33%"><strong>JavaScript</strong><br>Calculation & interactions</td>
+<td align="center" width="100%">
+<strong>HTML5 + CSS3 + JavaScript</strong><br>
+Complete application contained in a single <code>index.html</code> file
+</td>
 </tr>
 </table>
 
@@ -107,7 +108,7 @@ cash_calculator/
 
 | File | Description |
 |------|-------------|
-| `index.html` | Main cash calculator interface, styling, and functionality |
+| `index.html` | Complete cash calculator — structure, styling, and functionality |
 | `README.md` | Project documentation |
 
 ---
